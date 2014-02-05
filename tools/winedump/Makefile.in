@@ -1,0 +1,38 @@
+PROGRAMS = winedump$(EXEEXT)
+MANPAGES = winedump.man.in
+
+C_SRCS = \
+	debug.c \
+	dos.c \
+	dump.c \
+	emf.c \
+	font.c \
+	le.c \
+	lib.c \
+	lnk.c \
+	main.c \
+	minidump.c \
+	misc.c \
+	msc.c \
+	msmangle.c \
+	ne.c \
+	output.c \
+	pdb.c \
+	pe.c \
+	search.c \
+	symbol.c \
+	tlb.c
+
+OBJS = $(C_SRCS:.c=.o)
+
+winedump$(EXEEXT): $(OBJS)
+	$(CC) $(CFLAGS) -o winedump$(EXEEXT) $(OBJS) $(LIBPORT) $(LDFLAGS)
+
+.PHONY: install install-dev uninstall
+
+install install-dev:: $(PROGRAMS) install-man-pages
+	$(INSTALL_PROGRAM) winedump$(EXEEXT) $(DESTDIR)$(bindir)/winedump$(EXEEXT)
+	$(INSTALL_SCRIPT) $(srcdir)/function_grep.pl $(DESTDIR)$(bindir)/function_grep.pl
+
+uninstall::
+	$(RM) $(DESTDIR)$(bindir)/function_grep.pl $(DESTDIR)$(bindir)/winedump$(EXEEXT)

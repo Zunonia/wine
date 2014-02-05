@@ -1,0 +1,8 @@
+MODULE    = msvcr80.dll
+IMPORTLIB = msvcr80
+IMPORTS   = msvcrt
+
+C_SRCS = \
+	msvcr80.c
+
+RC_SRCS = msvcr80.rc
